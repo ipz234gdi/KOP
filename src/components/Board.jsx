@@ -1,15 +1,16 @@
 import Rod from './Rod'
 
-function Board({ rods, selectedRod, onRodClick }) {
+function Board({ rods, selectedRod, onRodClick, maxDiskCount }) {
     return (
         <div className="board">
             {rods.map((r, i) => (
                 <Rod
                     key={i}
-                    title={`Стрижень ${i + 1}`}
-                    disks={r}
+                    title={`Стержень ${i + 1}`}
+                    disks={rods[i]}
                     selected={selectedRod === i}
                     onClick={() => onRodClick(i)}
+                    maxDisks={maxDiskCount}
                 />
             ))}
         </div>

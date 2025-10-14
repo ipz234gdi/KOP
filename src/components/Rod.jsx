@@ -1,11 +1,14 @@
 import Disk from './Disk'
 
-function Rod({ title, disks = [], selected = false, onClick }) {
+function Rod({ title, disks = [], selected = false, onClick, maxDisks = 8 }) {
+    // Висота: 28px на диск + запас
+    const rodHeight = 28 * maxDisks + 24;
+
     return (
         <div className={`rod${selected ? " selected" : ""}`} onClick={onClick}>
             <div style={{
                 position: "relative",
-                height: "180px",
+                height: `${rodHeight}px`,
                 width: "100%",
                 display: "flex",
                 flexDirection: "column",
@@ -13,14 +16,16 @@ function Rod({ title, disks = [], selected = false, onClick }) {
                 alignItems: "center"
             }}>
                 <div className="rod-pole" />
-                <div style={{ position: "relative", 
-                    zIndex: 1, 
-                    width: "100%", 
-                    display: "flex", 
-                    flexDirection: "column", 
-                    alignItems: "center"
-
-                    }}>
+                <div style={{
+                    position: "relative",
+                    zIndex: 1,
+                    width: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    height: `${rodHeight}px`,
+                    justifyContent: "flex-end"
+                }}>
                     {disks.length === 0 ? (
                         <div className="rod-empty">Порожньо</div>
                     ) : (

@@ -42,14 +42,14 @@ export default function App() {
 
   return (
     <div className="app-container">
-      <Header title="Ханойські башти" subtitle="Каркас застосунку — без бізнес-логіки" />
+      <Header title="Ханойські башти" subtitle="Каркас застосунку" />
       <div>
         {page === "start" && <StartPage onStart={handleStart} />}
         {page === "game" && <GamePage diskCount={gameSettings.diskCount} onFinish={handleFinish} onAbort={handleAbort} />}
         {page === "results" && <ResultsPage stats={lastStats} onRestart={handleRestart} />}
       </div>
       <footer>
-        UI scaffold — витягніть компоненти до окремих файлів для виробничого коду.
+        Розроблено студентом Грушевицьким Д.І. ІПЗ-23-4, 2025
       </footer>
     </div>
   );

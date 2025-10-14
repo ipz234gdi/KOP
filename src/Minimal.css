@@ -35,12 +35,12 @@ header p {
 }
 
 main {
-  max-width: 480px;
+  /* max-width: 480px; */
   margin: 32px auto;
   padding: 24px;
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -67,7 +67,8 @@ input[type="number"] {
   margin-left: 8px;
 }
 
-button, .minimal-btn {
+button,
+.minimal-btn {
   background: #fff;
   border: 1px solid #222;
   border-radius: 6px;
@@ -80,11 +81,12 @@ button, .minimal-btn {
   font-weight: 500;
   margin: 0 2px;
   outline: none;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.04);
   display: inline-block;
 }
 
-button:hover, .minimal-btn:hover,
+button:hover,
+.minimal-btn:hover,
 .selected {
   background: #222 !important;
   color: #fff !important;
@@ -112,19 +114,23 @@ footer {
   border: 2px solid #ddd;
   border-radius: 16px;
   background: #fafafa;
-  min-width: 120px;
+  /* max-width: 180px; */
+  min-width: 180px;
+  box-sizing: border-box;
+  /* overflow: hidden; */
+
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
   transition: border 0.2s, box-shadow 0.2s, background 0.2s;
   position: relative;
 }
 
 .rod.selected {
-  border: 3px solid #222;
+  border: 2px solid #222;
   background: #f0f0f0;
-  box-shadow: 0 4px 16px rgba(0,0,0,0.10);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.10);
 }
 
 .rod-title {
@@ -147,11 +153,11 @@ footer {
   top: 20px;
   transform: translateX(-50%);
   width: 12px;
-  height: 140px;
+  height: calc(100% - 45px);
   background: #bbb;
   border-radius: 6px;
   z-index: 0;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.10);
 }
 
 .disk-anim {
@@ -159,6 +165,7 @@ footer {
 }
 
 .disk {
+  box-sizing: border-box;
   height: 24px;
   border-radius: 12px;
   color: #222;
@@ -168,10 +175,13 @@ footer {
   margin: 4px 0;
   font-size: 1rem;
   font-weight: bold;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
   border: 2px solid #fff;
   transition: width 0.3s, background 0.3s;
   background: #FFB347;
+  /* max-width: 98%;
+  min-width: 40px;
+  width: calc(40px + 8vw); */
 }
 
 .results-stats {
@@ -217,6 +227,7 @@ footer {
     max-width: 98vw;
     padding: 8px;
   }
+
   .board {
     gap: 8px;
     margin: 16px 0;

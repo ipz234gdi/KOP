@@ -1,4 +1,4 @@
-const diskColors = [
+const colors = [
     "#FFB347",
     "#87CEEB",
     "#90EE90",
@@ -10,15 +10,26 @@ const diskColors = [
 ];
 
 function Disk({ size, index }) {
+    // size — це номер диска (наприклад, 1...8)
+    // максимальний розмір диска (наприклад, 8)
+    const maxSize = 8;
+    const minWidth = 40; // px
+    const maxWidth = 160; // px
+
+    // Розрахунок ширини: чим більший size, тим ширший диск
+    const width = minWidth + ((maxWidth - minWidth) * (size - 1)) / (maxSize - 1);
+
+    const color = colors[(size - 1) % colors.length];
+
     return (
         <div
             className="disk disk-anim"
             style={{
-                width: `${40 + size * 20}px`,
-                background: diskColors[(size - 1) % diskColors.length],
+                width: `${width}px`,
+                background: color,
             }}
         >
-            {`D${size}`}
+            D{size}
         </div>
     );
 }
