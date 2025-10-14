@@ -49,7 +49,7 @@ export default function App() {
         {page === "results" && <ResultsPage stats={lastStats} onRestart={handleRestart} />}
       </div>
       <footer>
-        UI scaffold — витягніть компоненти до окремих файлів для виробничого коду.
+        Розроблено студентом Грушевицьким Д.І. ІПЗ-23-4, 2025
       </footer>
     </div>
   );
