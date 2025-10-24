@@ -10,13 +10,10 @@ const colors = [
 ];
 
 function Disk({ size, index }) {
-    // size — це номер диска (наприклад, 1...8)
-    // максимальний розмір диска (наприклад, 8)
     const maxSize = 8;
-    const minWidth = 40; // px
-    const maxWidth = 160; // px
+    const minWidth = 40;
+    const maxWidth = 160;
 
-    // Розрахунок ширини: чим більший size, тим ширший диск
     const width = minWidth + ((maxWidth - minWidth) * (size - 1)) / (maxSize - 1);
 
     const color = colors[(size - 1) % colors.length];

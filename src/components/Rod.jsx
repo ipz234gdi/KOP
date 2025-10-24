@@ -1,7 +1,6 @@
 import Disk from './Disk'
 
 function Rod({ title, disks = [], selected = false, onClick, maxDisks = 8 }) {
-    // Висота: 28px на диск + запас
     const rodHeight = 28 * maxDisks + 24;
 
     return (

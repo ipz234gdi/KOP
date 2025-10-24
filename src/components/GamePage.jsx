@@ -13,7 +13,6 @@ function GamePage({ diskCount, onFinish, onAbort }) {
         resetGame,
     } = useHanoiGame(diskCount);
 
-    // Завершення гри при перемозі
     if (isFinished()) {
         onFinish({ moves, time: getElapsedTime() });
         resetGame();
