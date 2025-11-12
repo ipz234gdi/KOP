@@ -1,34 +1,29 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import './Minimal.css'
-import Button from './components/Button'
-import Board from './components/Board'
 import Header from './components/Header'
-import Rod from './components/Rod'
-import Disk from './components/Disk'
-import StartPage from './components/StartPage'
-import GamePage from './components/GamePage'
-import ResultsPage from './components/ResultsPage'
+import StartPage from './pages/StartPage'
+import GamePage from './pages/GamePage'
+import ResultsPage from './pages/ResultsPage'
+import { useLocalStorage } from './hooks/useLocalStorage'
 
 export default function App() {
   const [page, setPage] = useState("start");
-  const [gameSettings, setGameSettings] = useState({ diskCount: 3 });
   const [lastStats, setLastStats] = useState(null);
 
+  const [settings, setSettings] = useLocalStorage('hanoiSettings', {
+    diskCount: 3,
+    difficulty: 1,
+  });
 
-  function handleStart(diskCount) {
-    setGameSettings({ diskCount });
+  function handleStart() {
     setPage("game");
   }
-
 
   function handleFinish(stats) {
     setLastStats(stats);
     setPage("results");
   }
-
 
   function handleAbort() {
     setPage("start");
@@ -44,8 +39,22 @@ export default function App() {
     <div className="app-container">
       <Header title="Ханойські башти" subtitle="Каркас застосунку" />
       <div>
-        {page === "start" && <StartPage onStart={handleStart} />}
-        {page === "game" && <GamePage diskCount={gameSettings.diskCount} onFinish={handleFinish} onAbort={handleAbort} />}
+        {page === "start" && (
+          <StartPage
+            onStart={handleStart}
+            settings={settings}
+            setSettings={setSettings}
+          />
+        )}
+
+        { }
+        {page === "game" && (
+          <GamePage
+            settings={settings}
+            onFinish={handleFinish}
+            onAbort={handleAbort}
+          />
+        )}
         {page === "results" && <ResultsPage stats={lastStats} onRestart={handleRestart} />}
       </div>
       <footer>

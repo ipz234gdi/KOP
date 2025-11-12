@@ -6,7 +6,7 @@ function Header({ title, subtitle }) {
           <h1 className="text-2xl font-semibold">{title}</h1>
           {subtitle && <p className="text-sm opacity-90">{subtitle}</p>}
         </div>
-        <div className="text-xs opacity-80">Tower of Hanoi — UI scaffold</div>
+        <div className="text-xs opacity-80">Tower of Hanoi</div>
       </div>
     </header>
   );

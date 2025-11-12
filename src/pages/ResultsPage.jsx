@@ -1,18 +1,6 @@
-import Button from './Button'
+import Button from '../components/Button'
+import { formatTime } from '../utils/formatTime';
 
-function formatTime(sec) {
-  if (typeof sec !== "number" || isNaN(sec)) return "--";
-  const days = Math.floor(sec / 86400);
-  const hours = Math.floor((sec % 86400) / 3600);
-  const minutes = Math.floor((sec % 3600) / 60);
-  const seconds = sec % 60;
-  let parts = [];
-  if (days) parts.push(`${days} д`);
-  if (hours) parts.push(`${hours} г`);
-  if (minutes) parts.push(`${minutes} хв`);
-  parts.push(`${seconds} с`);
-  return parts.join(" ");
-}
 
 function ResultsPage({ stats, onRestart }) {
   return (
@@ -34,7 +22,6 @@ function ResultsPage({ stats, onRestart }) {
 
         <div style={{ display: "flex", justifyContent: "center", gap: "12px" }}>
           <Button onClick={onRestart}>Грати знову</Button>
-          <Button onClick={() => alert('Поділитись (плейсхолдер)')}>Поділитись</Button>
         </div>
       </section>
     </main>

@@ -1,71 +1,86 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 
-export function useHanoiGame(diskCount) {
-  const [rods, setRods] = useState([
+function createInitialRods(diskCount) {
+  return [
     Array.from({ length: diskCount }, (_, i) => diskCount - i),
     [],
     []
-  ]);
+  ];
+}
+
+function canMoveDisk(fromRod, toRod) {
+  if (fromRod.length === 0) return false;
+  if (toRod.length === 0) return true;
+  return fromRod[fromRod.length - 1] < toRod[toRod.length - 1];
+}
+
+export function useHanoiGame(diskCount) {
+  const [rods, setRods] = useState(() => createInitialRods(diskCount));
   const [selectedRod, setSelectedRod] = useState(null);
   const [moves, setMoves] = useState(0);
   const startTime = useRef(Date.now());
 
-  function handleRodClick(idx) {
-    if (selectedRod === null) {
-      // Select rod if it has disks
-      if (rods[idx].length > 0) setSelectedRod(idx);
-    } else if (selectedRod === idx) {
-      setSelectedRod(null);
-    } else {
-      // Try to move disk
+  useEffect(() => {
+    resetGame();
+  }, [diskCount]);
+
+  const handleRodClick = useCallback(
+    (idx) => {
+      if (selectedRod === null) {
+        if (rods[idx].length > 0) setSelectedRod(idx);
+        return;
+      }
+
+      if (selectedRod === idx) {
+        setSelectedRod(null);
+        return;
+      }
+
       const fromRod = rods[selectedRod];
       const toRod = rods[idx];
-      if (
-        fromRod.length > 0 &&
-        (toRod.length === 0 || fromRod[fromRod.length - 1] < toRod[toRod.length - 1])
-      ) {
-        const disk = fromRod[fromRod.length - 1];
-        const newRods = rods.map((rod, i) =>
-          i === selectedRod
-            ? rod.slice(0, -1)
-            : i === idx
-            ? [...rod, disk]
-            : rod
-        );
-        setRods(newRods);
-        setMoves(moves + 1);
-        setSelectedRod(null);
-      } else {
-        setSelectedRod(null);
+
+      if (canMoveDisk(fromRod, toRod)) {
+        moveDisk(selectedRod, idx);
       }
-    }
-  }
 
-  function isFinished() {
-    return rods[2].length === diskCount;
-  }
+      setSelectedRod(null);
+    },
+    [selectedRod, rods]
+  );
 
-  function getElapsedTime() {
-    return Math.floor((Date.now() - startTime.current) / 1000);
-  }
+  const moveDisk = useCallback(
+    (from, to) => {
+      const disk = rods[from][rods[from].length - 1];
+      const newRods = rods.map((rod, i) => {
+        if (i === from) return rod.slice(0, -1);
+        if (i === to) return [...rod, disk];
+        return rod;
+      });
+      setRods(newRods);
+      setMoves((m) => m + 1);
+    },
+    [rods]
+  );
 
-  function resetGame() {
-    setRods([
-      Array.from({ length: diskCount }, (_, i) => diskCount - i),
-      [],
-      []
-    ]);
+  const isFinished = useCallback(() => rods[2].length === diskCount, [rods, diskCount]);
+
+  const getElapsedTime = useCallback(
+    () => Math.floor((Date.now() - startTime.current) / 1000),
+    []
+  );
+
+  const resetGame = useCallback(() => {
+    setRods(createInitialRods(diskCount));
     setMoves(0);
     setSelectedRod(null);
     startTime.current = Date.now();
-  }
+  }, [diskCount]);
 
   return {
     rods,
     selectedRod,
     moves,
     handleRodClick,
-    setSelectedRod,
     isFinished,
     getElapsedTime,
     resetGame,
