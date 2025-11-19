@@ -1,4 +1,4 @@
-import Button from './Button'
+import Button from '../components/common/Button'
 
 function formatTime(sec) {
   if (typeof sec !== "number" || isNaN(sec)) return "--";

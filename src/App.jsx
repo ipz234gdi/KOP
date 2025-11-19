@@ -1,16 +1,10 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import './Minimal.css'
-import Button from './components/Button'
-import Board from './components/Board'
-import Header from './components/Header'
-import Rod from './components/Rod'
-import Disk from './components/Disk'
-import StartPage from './components/StartPage'
-import GamePage from './components/GamePage'
-import ResultsPage from './components/ResultsPage'
+import Header from './components/common/Header'
+import StartPage from './pages/StartPage'
+import GamePage from './pages/GamePage'
+import ResultsPage from './pages/ResultsPage'
 
 export default function App() {
   const [page, setPage] = useState("start");

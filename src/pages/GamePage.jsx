@@ -1,5 +1,5 @@
-import Button from './Button'
-import Board from './Board'
+import Button from '../components/common/Button'
+import Board from '../components/game/Board'
 import { useHanoiGame } from '../hooks/useHanoiGame'
 
 function GamePage({ diskCount, onFinish, onAbort }) {
