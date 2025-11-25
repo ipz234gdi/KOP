@@ -5,8 +5,14 @@ import GameModal from '../components/GameModal'
 import { useHanoiGame } from '../hooks/useHanoiGame'
 import { useGameTimer } from '../hooks/useGameTimer';
 import { formatTime } from '../utils/formatTime';
+import { useParams } from "react-router-dom";
 
-export function GamePage({ onFinish, onAbort, settings }) {
+export function GamePage({ onFinish, onAbort }) {
+    const { difficulty, diskCount } = useParams();
+
+    const diskCountNum = Number(diskCount);
+    const difficultyNum = Number(difficulty);
+
     const [showFinishModal, setShowFinishModal] = useState(false);
     const [finalStats, setFinalStats] = useState(null);
 
@@ -18,9 +24,9 @@ export function GamePage({ onFinish, onAbort, settings }) {
         isFinished,
         getElapsedTime,
         resetGame,
-    } = useHanoiGame(settings.diskCount);
+    } = useHanoiGame(diskCountNum);
 
-    const maxTime = Math.round((2 ** settings.diskCount) * (4 - settings.difficulty) * 2);
+    const maxTime = Math.round((2 ** diskCountNum) * (4 - difficultyNum) * 2);
 
     const { currentTime, timeExpired, resetTimer } = useGameTimer(getElapsedTime, maxTime, showFinishModal);
 
@@ -57,7 +63,8 @@ export function GamePage({ onFinish, onAbort, settings }) {
                 <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
                     <div>
                         <h2>Гра</h2>
-                        <p>Кількість дисків: {settings.diskCount}</p>
+                        <p>Кількість дисків: {diskCountNum}</p>
+                        <p>Складність: {difficultyNum}</p>
                         <p>Ходів: {moves}</p>
                         <p>Час: {formatTime(currentTime)} / залишилось {formatTime(Math.max(maxTime - currentTime, 0))}</p>
                     </div>

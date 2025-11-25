@@ -6,10 +6,12 @@ import StartPage from './pages/StartPage'
 import GamePage from './pages/GamePage'
 import ResultsPage from './pages/ResultsPage'
 import { useLocalStorage } from './hooks/useLocalStorage'
+import { Routes, Route, useNavigate } from 'react-router-dom'
 
 export default function App() {
-  const [page, setPage] = useState("start");
-  const [lastStats, setLastStats] = useState(null);
+  const navigate = useNavigate();
+
+  const [lastStats, setLastStats] = useLocalStorage("lastStats", null);
 
   const [settings, setSettings] = useLocalStorage('hanoiSettings', {
     diskCount: 3,
@@ -17,46 +19,55 @@ export default function App() {
   });
 
   function handleStart() {
-    setPage("game");
+    navigate(`/game/${settings.difficulty}/${settings.diskCount}`);
   }
 
   function handleFinish(stats) {
     setLastStats(stats);
-    setPage("results");
+    navigate('/results');
   }
-
-  function handleAbort() {
-    setPage("start");
-  }
-
 
   function handleRestart() {
-    setPage("start");
+    navigate('/');
   }
-
 
   return (
     <div className="app-container">
       <Header title="Ханойські башти" subtitle="Каркас застосунку" />
-      <div>
-        {page === "start" && (
-          <StartPage
-            onStart={handleStart}
-            settings={settings}
-            setSettings={setSettings}
-          />
-        )}
 
-        { }
-        {page === "game" && (
-          <GamePage
-            settings={settings}
-            onFinish={handleFinish}
-            onAbort={handleAbort}
-          />
-        )}
-        {page === "results" && <ResultsPage stats={lastStats} onRestart={handleRestart} />}
-      </div>
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <StartPage
+              onStart={handleStart}
+              settings={settings}
+              setSettings={setSettings}
+            />
+          }
+        />
+
+        <Route
+          path="/game/:difficulty/:diskCount"
+          element={
+            <GamePage
+              onFinish={handleFinish}
+              onAbort={() => navigate('/')}
+            />
+          }
+        />
+
+        <Route
+          path="/results"
+          element={
+            <ResultsPage
+              stats={lastStats}
+              onRestart={handleRestart}
+            />
+          }
+        />
+      </Routes>
+
       <footer>
         Розроблено студентом Грушевицьким Д.І. ІПЗ-23-4, 2025
       </footer>
