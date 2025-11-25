@@ -1,14 +1,15 @@
 import { useState, useEffect } from 'react'
-import Button from '../components/Button'
-import Board from '../components/Board'
-import GameModal from '../components/GameModal'
+import Button from '../components/common/Button'
+import Board from '../components/game/Board'
+import GameModal from '../components/common/GameModal'
 import { useHanoiGame } from '../hooks/useHanoiGame'
 import { useGameTimer } from '../hooks/useGameTimer';
 import { formatTime } from '../utils/formatTime';
 import { useParams } from "react-router-dom";
+import styles from './GamePage.module.css';
 
 export function GamePage({ onFinish, onAbort }) {
-    const { difficulty, diskCount } = useParams();
+    const { userId, difficulty, diskCount } = useParams();
 
     const diskCountNum = Number(diskCount);
     const difficultyNum = Number(difficulty);
@@ -54,33 +55,39 @@ export function GamePage({ onFinish, onAbort }) {
     };
 
     const handleGoToResults = () => {
-        onFinish(finalStats);
+        // передаємо userId назад в App щоб App зміг правильно перейти на /user/:userId/results
+        onFinish(finalStats, userId);
     };
 
     return (
-        <main>
+        <main className={styles.page}>
             <section>
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
-                    <div>
-                        <h2>Гра</h2>
-                        <p>Кількість дисків: {diskCountNum}</p>
-                        <p>Складність: {difficultyNum}</p>
-                        <p>Ходів: {moves}</p>
-                        <p>Час: {formatTime(currentTime)} / залишилось {formatTime(Math.max(maxTime - currentTime, 0))}</p>
+                <div className={styles.headerRow}>
+                    <div className={styles.stats}>
+                        <h2 className={styles.title}>Гра — {userId}</h2>
+                        <div className={styles.statRow}>
+                          <span>Диски:</span><strong>{diskCountNum}</strong>
+                        </div>
+                        <div className={styles.statRow}>
+                          <span>Складність:</span><strong>{difficultyNum}</strong>
+                        </div>
+                        <div className={styles.statRow}>
+                          <span>Ходи:</span><strong>{moves}</strong>
+                        </div>
+                        <div className={styles.statRow}>
+                          <span>Час:</span><strong>{formatTime(currentTime)}</strong>
+                          <small className={styles.remaining}> / залишилось {formatTime(Math.max(maxTime - currentTime, 0))}</small>
+                        </div>
                     </div>
 
-                    <div style={{
-                        display: "flex",
-                        gap: "8px",
-                        flexDirection: "column",
-                    }}>
+                    <div className={styles.controls}>
                         <Button onClick={onAbort}>Повернутися</Button>
                     </div>
                 </div>
 
                 <Board rods={rods} selectedRod={selectedRod} onRodClick={handleRodClick} />
 
-                <div style={{ marginTop: "24px", color: "#888", fontSize: "0.95rem" }}>
+                <div className={styles.hint}>
                     Переміщайте диски, дотримуючись правил Ханойської вежі.
                 </div>
             </section>

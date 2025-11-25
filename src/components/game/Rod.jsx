@@ -1,10 +1,11 @@
 import Disk from './Disk'
+import styles from './Rod.module.css'
 
 function Rod({ title, disks = [], selected = false, onClick, maxDisks = 8 }) {
     const rodHeight = 28 * maxDisks + 24;
 
     return (
-        <div className={`rod${selected ? " selected" : ""}`} onClick={onClick}>
+        <div className={`${styles.rod} ${selected ? styles.selected : ''}`} onClick={onClick}>
             <div style={{
                 position: "relative",
                 height: `${rodHeight}px`,
@@ -14,7 +15,7 @@ function Rod({ title, disks = [], selected = false, onClick, maxDisks = 8 }) {
                 justifyContent: "flex-end",
                 alignItems: "center"
             }}>
-                <div className="rod-pole" />
+                <div className={styles.rodPole} />
                 <div style={{
                     position: "relative",
                     zIndex: 1,
@@ -26,13 +27,13 @@ function Rod({ title, disks = [], selected = false, onClick, maxDisks = 8 }) {
                     justifyContent: "flex-end"
                 }}>
                     {disks.length === 0 ? (
-                        <div className="rod-empty">Порожньо</div>
+                        <div className={styles.rodEmpty}>Порожньо</div>
                     ) : (
                         disks.slice().reverse().map((d, i) => <Disk key={i} size={d} index={i} />)
                     )}
                 </div>
             </div>
-            <div className="rod-title">{title}</div>
+            <div className={styles.rodTitle}>{title}</div>
         </div>
     );
 }

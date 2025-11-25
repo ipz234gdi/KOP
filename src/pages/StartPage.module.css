@@ -1,0 +1,62 @@
+﻿.page {
+  max-width: 520px;
+  margin: 28px auto;
+  padding: 20px;
+}
+
+.form {
+  background: #fff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(25, 25, 25, 0.04);
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  margin: 0 0 6px 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.hint {
+  color: #6c757d;
+  margin: -6px 0 16px 0;
+  font-size: 0.95rem;
+}
+
+.field {
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
+.label {
+  margin-bottom: 6px;
+  font-size: 0.98rem;
+}
+
+.input {
+  padding: 10px 12px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.error {
+  margin-top: 6px;
+  color: #d9534f;
+  font-size: 0.9rem;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 8px;
+}
+@media (max-width: 520px) {
+  .page { padding: 12px; }
+  .form { padding: 14px; }
+}

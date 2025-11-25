@@ -1,8 +1,9 @@
 import Rod from './Rod'
+import styles from './Board.module.css'
 
 function Board({ rods, selectedRod, onRodClick, maxDiskCount }) {
     return (
-        <div className="board">
+        <div className={styles.board}>
             {rods.map((r, i) => (
                 <Rod
                     key={i}

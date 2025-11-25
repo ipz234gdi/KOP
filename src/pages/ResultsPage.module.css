@@ -1,0 +1,55 @@
+﻿.page {
+  max-width: 540px;
+  margin: 28px auto;
+  padding: 8px;
+}
+
+.center {
+  background: #fff;
+  padding: 22px;
+  border-radius: 12px;
+  box-shadow: 0 6px 18px rgba(20,20,20,0.04);
+  text-align: center;
+}
+
+.title {
+  font-size: 1.25rem;
+  margin: 0 0 8px 0;
+  font-weight: 600;
+}
+
+.hint {
+  color: #888;
+  margin-bottom: 18px;
+}
+
+.resultsStats {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 20px;
+}
+
+.resultsBlock {
+  padding: 14px;
+  border: 1px solid #f0f0f0;
+  border-radius: 9px;
+  min-width: 100px;
+}
+
+.resultsLabel {
+  font-size: 0.95rem;
+  color: #888;
+}
+
+.resultsValue {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-top: 6px;
+}
+
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}

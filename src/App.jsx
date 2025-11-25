@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './App.css'
-import './Minimal.css'
-import Header from './components/Header'
+// import './Minimal.css'
+import Header from './components/common/Header'
 import StartPage from './pages/StartPage'
 import GamePage from './pages/GamePage'
 import ResultsPage from './pages/ResultsPage'
@@ -18,13 +18,16 @@ export default function App() {
     difficulty: 1,
   });
 
-  function handleStart() {
-    navigate(`/game/${settings.difficulty}/${settings.diskCount}`);
+  // отримує values з StartPage: { userId, diskCount, difficulty }
+  function handleStart(values) {
+    const { userId, difficulty, diskCount } = values;
+    navigate(`/user/${encodeURIComponent(userId)}/game/${difficulty}/${diskCount}`);
   }
 
-  function handleFinish(stats) {
+  // тепер отримує stats та userId
+  function handleFinish(stats, userId) {
     setLastStats(stats);
-    navigate('/results');
+    navigate(`/user/${encodeURIComponent(userId)}/results`);
   }
 
   function handleRestart() {
@@ -33,7 +36,7 @@ export default function App() {
 
   return (
     <div className="app-container">
-      <Header title="Ханойські башти" subtitle="Каркас застосунку" />
+      <Header title="Ханойські башти" subtitle="Повний робочий прототип" />
 
       <Routes>
         <Route
@@ -48,17 +51,17 @@ export default function App() {
         />
 
         <Route
-          path="/game/:difficulty/:diskCount"
+          path="/user/:userId/game/:difficulty/:diskCount"
           element={
             <GamePage
-              onFinish={handleFinish}
+              onFinish={(stats, userId) => handleFinish(stats, userId)}
               onAbort={() => navigate('/')}
             />
           }
         />
 
         <Route
-          path="/results"
+          path="/user/:userId/results"
           element={
             <ResultsPage
               stats={lastStats}

@@ -1,0 +1,12 @@
+﻿.board {
+  display: flex;
+  gap: 32px;
+  justify-content: center;
+  margin: 40px 0;
+}
+@media (max-width: 600px) {
+  .board {
+    gap: 8px;
+    margin: 16px 0;
+  }
+}

@@ -1,9 +1,15 @@
-import Button from '../components/Button'
-
+import Button from '../components/common/Button'
+import { useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
+import { AutoSave } from "../hooks/AutoSave";
+import styles from './StartPage.module.css';
 
 const settingsSchema = yup.object({
+    userId: yup
+        .string()
+        .required("Вкажіть userId")
+        .min(3, "Має бути щонайменше 3 символи"),
     diskCount: yup
         .number()
         .transform(value => (isNaN(value) ? undefined : value))
@@ -18,48 +24,72 @@ const settingsSchema = yup.object({
 
 function StartPage({ onStart, settings, setSettings }) {
 
+    // комбінуємо початкові значення; якщо в settings немає userId — пустий рядок
+    const initialValues = { userId: settings.userId || '', ...settings };
+
     return (
-        <main>
+        <main className={styles.page}>
             <section>
                 <Formik
-                    initialValues={settings}
+                    initialValues={initialValues}
                     enableReinitialize
                     validationSchema={settingsSchema}
                     onSubmit={(values) => {
                         setSettings(values);
-                        onStart();
+                        onStart(values);
                     }}
                 >
-                    <Form style={{ maxWidth: "400px", margin: "0 auto" }}>
-                        <h2>Налаштування гри</h2>
-                        <p style={{ color: "#6c757d", marginTop: "-10px" }}>Оберіть параметри для початку гри.</p>
+                    <Form className={styles.form}>
+                        <AutoSave
+                            onChange={(values) => {
+                                localStorage.setItem("settings", JSON.stringify(values));
+                                setSettings(values);
+                            }}
+                        />
 
-                        <div style={{ marginBottom: "1rem"}}>
-                            <label htmlFor="diskCount" style={{ display: "block", marginBottom: "0.5rem" }}>
+                        <h2 className={styles.title}>Налаштування гри</h2>
+                        <p className={styles.hint}>Оберіть параметри для початку гри.</p>
+
+                        <div className={styles.field}>
+                            <label htmlFor="userId" className={styles.label}>
+                                User ID:
+                            </label>
+                            <Field
+                                id="userId"
+                                name="userId"
+                                type="text"
+                                placeholder="ваш id (наприклад: user123)"
+                                className={styles.input}
+                            />
+                            <ErrorMessage name="userId" component="div" className={styles.error} />
+                        </div>
+
+                        <div className={styles.field}>
+                            <label htmlFor="diskCount" className={styles.label}>
                                 Кількість дисків:
                             </label>
                             <Field
                                 id="diskCount"
                                 name="diskCount"
                                 type="number"
-                                style={{ display: "block", boxSizing: "border-box", width: "100%", padding: "0.5rem" }}
+                                className={styles.input}
                             />
-                            <ErrorMessage name="diskCount" component="div" style={{ color: "red", fontSize: "0.9rem", marginTop: "5px" }} />
+                            <ErrorMessage name="diskCount" component="div" className={styles.error} />
                         </div>
 
-                        <div style={{ marginBottom: "1rem" }}>
-                            <label htmlFor="difficulty" style={{ display: "block", marginBottom: "0.5rem" }}>
+                        <div className={styles.field}>
+                            <label htmlFor="difficulty" className={styles.label}>
                                 Складність:
                             </label>
-                            <Field as="select" id="difficulty" name="difficulty" style={{ width: "100%", padding: "0.5rem" }}>
+                            <Field as="select" id="difficulty" name="difficulty" className={styles.input}>
                                 <option value="1">Легка</option>
                                 <option value="2">Середня</option>
                                 <option value="3">Важка</option>
                             </Field>
-                            <ErrorMessage name="difficulty" component="div" style={{ color: "red", fontSize: "0.9rem", marginTop: "5px" }} />
+                            <ErrorMessage name="difficulty" component="div" className={styles.error} />
                         </div>
 
-                        <div className="start-controls" style={{ marginTop: "24px" }}>
+                        <div className={styles.controls}>
                             <Button type="submit">Розпочати гру</Button>
                         </div>
                     </Form>

@@ -1,9 +1,10 @@
 ﻿import { createPortal } from 'react-dom';
+import styles from './Modal.module.css';
 
 function Modal({ children }) {
   return createPortal(
-    <div className="modal-overlay">
-      <div className="modal-content">
+    <div className={styles.modalOverlay}>
+      <div className={styles.modalContent}>
         {children}
       </div>
     </div>,

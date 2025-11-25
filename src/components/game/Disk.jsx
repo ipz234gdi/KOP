@@ -1,3 +1,5 @@
+import styles from './Disk.module.css';
+
 const colors = [
     "#FFB347",
     "#87CEEB",
@@ -20,7 +22,7 @@ function Disk({ size, index }) {
 
     return (
         <div
-            className="disk disk-anim"
+            className={`${styles.disk} ${styles.diskAnim}`}
             style={{
                 width: `${width}px`,
                 background: color,
