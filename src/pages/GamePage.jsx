@@ -55,8 +55,7 @@ export function GamePage({ onFinish, onAbort }) {
     };
 
     const handleGoToResults = () => {
-        // передаємо userId назад в App щоб App зміг правильно перейти на /user/:userId/results
-        onFinish(finalStats, userId);
+        onFinish(finalStats, userId, difficultyNum, diskCountNum, !!timeExpired);
     };
 
     return (

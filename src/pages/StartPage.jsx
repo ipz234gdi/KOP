@@ -2,7 +2,7 @@ import Button from '../components/common/Button'
 import { useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
-import { AutoSave } from "../hooks/AutoSave";
+import { AutoSave } from "../utils/AutoSave";
 import styles from './StartPage.module.css';
 
 const settingsSchema = yup.object({

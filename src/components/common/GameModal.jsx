@@ -22,7 +22,7 @@ export default function GameModal({ timeExpired, finalStats, onRestart, onFinish
 
       <div style={{ display: "flex", gap: "1rem", justifyContent: "center", marginTop: "1rem" }}>
         <Button onClick={onRestart}>Почати заново</Button>
-        {!timeExpired && <Button onClick={onFinish}>Завершити</Button>}
+        <Button onClick={onFinish}>{timeExpired ? 'Переглянути результати' : 'Завершити'}</Button>
       </div>
     </Modal>
   );

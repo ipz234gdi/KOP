@@ -2,6 +2,7 @@ import Button from '../components/common/Button'
 import { formatTime } from '../utils/formatTime';
 import { useParams } from "react-router-dom";
 import styles from './ResultsPage.module.css';
+import AllResults from '../components/common/AllResults';
 
 
 function ResultsPage({ stats, onRestart }) {
@@ -27,6 +28,9 @@ function ResultsPage({ stats, onRestart }) {
         <div className={styles.actions}>
           <Button onClick={onRestart}>Грати знову</Button>
         </div>
+
+        <AllResults />
+
       </section>
     </main>
   );

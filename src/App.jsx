@@ -6,6 +6,7 @@ import StartPage from './pages/StartPage'
 import GamePage from './pages/GamePage'
 import ResultsPage from './pages/ResultsPage'
 import { useLocalStorage } from './hooks/useLocalStorage'
+import { saveGameResult } from './utils/gameStorage'
 import { Routes, Route, useNavigate } from 'react-router-dom'
 
 export default function App() {
@@ -18,15 +19,20 @@ export default function App() {
     difficulty: 1,
   });
 
-  // отримує values з StartPage: { userId, diskCount, difficulty }
   function handleStart(values) {
     const { userId, difficulty, diskCount } = values;
     navigate(`/user/${encodeURIComponent(userId)}/game/${difficulty}/${diskCount}`);
   }
 
-  // тепер отримує stats та userId
-  function handleFinish(stats, userId) {
+  function handleFinish(stats, userId, difficulty, diskCount, lost = false) {
     setLastStats(stats);
+
+    try {
+      saveGameResult({ stats, userId, difficulty, diskCount, lost });
+    } catch (err) {
+      console.error('Помилка збереження гри через saveGameResult:', err);
+    }
+
     navigate(`/user/${encodeURIComponent(userId)}/results`);
   }
 
@@ -54,7 +60,7 @@ export default function App() {
           path="/user/:userId/game/:difficulty/:diskCount"
           element={
             <GamePage
-              onFinish={(stats, userId) => handleFinish(stats, userId)}
+              onFinish={handleFinish}
               onAbort={() => navigate('/')}
             />
           }
