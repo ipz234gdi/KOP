@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import Button from '../components/Button'
-import Board from '../components/Board'
-import GameModal from '../components/GameModal'
+import Button from '../components/common/Button'
+import Board from '../components/game/Board'
+import GameModal from '../components/common/GameModal'
 import { useHanoiGame } from '../hooks/useHanoiGame'
 import { useGameTimer } from '../hooks/useGameTimer';
 import { formatTime } from '../utils/formatTime';

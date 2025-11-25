@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import './App.css'
 import './Minimal.css'
-import Header from './components/Header'
+import Header from './components/common/Header'
 import StartPage from './pages/StartPage'
 import GamePage from './pages/GamePage'
 import ResultsPage from './pages/ResultsPage'

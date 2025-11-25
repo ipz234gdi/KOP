@@ -1,5 +1,5 @@
 ﻿import Button from './Button';
-import { formatTime } from '../utils/formatTime';
+import { formatTime } from '../../utils/formatTime';
 import Modal from './Modal';
 
 export default function GameModal({ timeExpired, finalStats, onRestart, onFinish }) {

@@ -1,4 +1,4 @@
-import Button from '../components/Button'
+import Button from '../components/common/Button'
 
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
