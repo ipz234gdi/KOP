@@ -8,6 +8,8 @@ import ResultsPage from './pages/ResultsPage'
 import { useLocalStorage } from './hooks/useLocalStorage'
 import { saveGameResult } from './utils/gameStorage'
 import { Routes, Route, useNavigate } from 'react-router-dom'
+import GameRouteGuard from "./routes/GameRouteGuard";
+import NotFoundPage from "./pages/NotFoundPage";
 
 export default function App() {
   const navigate = useNavigate();
@@ -59,10 +61,12 @@ export default function App() {
         <Route
           path="/user/:userId/game/:difficulty/:diskCount"
           element={
-            <GamePage
-              onFinish={handleFinish}
-              onAbort={() => navigate('/')}
-            />
+            <GameRouteGuard>
+              <GamePage
+                onFinish={handleFinish}
+                onAbort={() => navigate('/')}
+              />
+            </GameRouteGuard>
           }
         />
 
@@ -75,6 +79,9 @@ export default function App() {
             />
           }
         />
+
+        <Route path="/404" element={<NotFoundPage />} />
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
 
       <footer>
