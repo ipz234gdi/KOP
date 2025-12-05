@@ -36,26 +36,21 @@ export function GamePage({ onFinish, onAbort }) {
     const { 
         showFinishModal, 
         finalStats, 
-        resetStatus 
+        handleRestartLevel,
+        handleGoToResults
     } = useGameStatus({
         isFinished,
-        timeExpired,
         moves,
         getElapsedTime,
-        currentTime
-    });
-
-    const handleRestartLevel = () => {
-        resetGame();
-        resetTimer();
-        resetStatus();
-    };
-
-    const handleGoToResults = () => {
-        if (onFinish) {
-            onFinish(finalStats, userId, difficultyNum, diskCountNum, !!timeExpired);
-        }
-    };
+        currentTime,
+        timeExpired,
+        resetGame,
+        resetTimer,
+        onFinish,
+        userId,
+        difficultyNum,
+        diskCountNum
+    })
 
     return (
         <main className={styles.page}>

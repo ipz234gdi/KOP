@@ -2,10 +2,16 @@
 
 export function useGameStatus({
     isFinished,
-    timeExpired,
     moves,
     getElapsedTime,
-    currentTime
+    currentTime,
+    timeExpired,
+    resetGame,
+    resetTimer,
+    onFinish,
+    userId,
+    difficultyNum,
+    diskCountNum
 }) {
     const [showFinishModal, setShowFinishModal] = useState(false);
     const [finalStats, setFinalStats] = useState(null);
@@ -16,7 +22,7 @@ export function useGameStatus({
             setFinalStats({ moves, time: finalTime });
             setShowFinishModal(true);
         }
-    }, [isFinished, showFinishModal, moves, getElapsedTime]);
+    }, [isFinished, moves, getElapsedTime, showFinishModal]);
 
     useEffect(() => {
         if (timeExpired && !showFinishModal) {
@@ -25,14 +31,27 @@ export function useGameStatus({
         }
     }, [timeExpired, showFinishModal, currentTime, moves]);
 
-    const resetStatus = () => {
+    const handleRestartLevel = () => {
+        resetGame();
+        resetTimer();
         setShowFinishModal(false);
         setFinalStats(null);
+    };
+
+    const handleGoToResults = () => {
+        onFinish(
+            finalStats,
+            userId,
+            difficultyNum,
+            diskCountNum,
+            !!timeExpired
+        );
     };
 
     return {
         showFinishModal,
         finalStats,
-        resetStatus
+        handleRestartLevel,
+        handleGoToResults
     };
 }
