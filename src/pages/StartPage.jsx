@@ -6,6 +6,7 @@ import styles from './StartPage.module.css';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { updateSettings } from '../store/slices/settingsSlice';
+import { DefdiskCountNum, DefdifficultyNum, DefuserId } from '../utils/DefaultValue';
 
 const settingsSchema = yup.object({
     userId: yup
@@ -29,9 +30,9 @@ function StartPage({ onStart }) {
     const settings = useSelector((state) => state.settings);
 
     const initialValues = { 
-        userId: settings.userId || '', 
-        diskCount: settings.diskCount || 3,
-        difficulty: settings.difficulty || 1 
+        userId: settings.userId || DefuserId, 
+        diskCount: settings.diskCount || DefdiskCountNum,
+        difficulty: settings.difficulty || DefdifficultyNum 
     };
 
     return (

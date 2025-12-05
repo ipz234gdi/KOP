@@ -1,21 +1,19 @@
-import { useState, useEffect } from 'react'
 import Button from '../components/common/Button'
 import Board from '../components/game/Board'
 import GameModal from '../components/common/GameModal'
 import { useHanoiGame } from '../hooks/useHanoiGame'
 import { useGameTimer } from '../hooks/useGameTimer';
+import { useGameStatus } from '../hooks/useGameStatus';
 import { formatTime } from '../utils/formatTime';
 import { useParams } from "react-router-dom";
 import styles from './GamePage.module.css';
+import { DefdiskCountNum, DefdifficultyNum } from '../utils/DefaultValue';
 
 export function GamePage({ onFinish, onAbort }) {
     const { userId, difficulty, diskCount } = useParams();
 
-    const diskCountNum = Number(diskCount);
-    const difficultyNum = Number(difficulty);
-
-    const [showFinishModal, setShowFinishModal] = useState(false);
-    const [finalStats, setFinalStats] = useState(null);
+    const diskCountNum = Number(diskCount) || DefdiskCountNum;
+    const difficultyNum = Number(difficulty) || DefdifficultyNum;
 
     const {
         rods,
@@ -28,34 +26,35 @@ export function GamePage({ onFinish, onAbort }) {
     } = useHanoiGame(diskCountNum);
 
     const maxTime = Math.round((2 ** diskCountNum) * (4 - difficultyNum) * 2);
+    
+    const { currentTime, timeExpired, resetTimer } = useGameTimer(
+        getElapsedTime, 
+        maxTime, 
+        isFinished()
+    );
 
-    const { currentTime, timeExpired, resetTimer } = useGameTimer(getElapsedTime, maxTime, showFinishModal);
-
-    useEffect(() => {
-        if (isFinished() && !showFinishModal) {
-
-            const finalTime = getElapsedTime();
-            setFinalStats({ moves, time: finalTime });
-            setShowFinishModal(true);
-        }
-    }, [rods, isFinished, moves, getElapsedTime, showFinishModal]);
-
-    useEffect(() => {
-        if (timeExpired && !showFinishModal) {
-            setFinalStats({ moves, time: currentTime });
-            setShowFinishModal(true);
-        }
-    }, [timeExpired, showFinishModal, currentTime, moves]);
+    const { 
+        showFinishModal, 
+        finalStats, 
+        resetStatus 
+    } = useGameStatus({
+        isFinished,
+        timeExpired,
+        moves,
+        getElapsedTime,
+        currentTime
+    });
 
     const handleRestartLevel = () => {
         resetGame();
         resetTimer();
-        setShowFinishModal(false);
-        setFinalStats(null);
+        resetStatus();
     };
 
     const handleGoToResults = () => {
-        onFinish(finalStats, userId, difficultyNum, diskCountNum, !!timeExpired);
+        if (onFinish) {
+            onFinish(finalStats, userId, difficultyNum, diskCountNum, !!timeExpired);
+        }
     };
 
     return (
@@ -65,17 +64,17 @@ export function GamePage({ onFinish, onAbort }) {
                     <div className={styles.stats}>
                         <h2 className={styles.title}>Гра — {userId}</h2>
                         <div className={styles.statRow}>
-                          <span>Диски:</span><strong>{diskCountNum}</strong>
+                            <span>Диски:</span><strong>{diskCountNum}</strong>
                         </div>
                         <div className={styles.statRow}>
-                          <span>Складність:</span><strong>{difficultyNum}</strong>
+                            <span>Складність:</span><strong>{difficultyNum}</strong>
                         </div>
                         <div className={styles.statRow}>
-                          <span>Ходи:</span><strong>{moves}</strong>
+                            <span>Ходи:</span><strong>{moves}</strong>
                         </div>
                         <div className={styles.statRow}>
-                          <span>Час:</span><strong>{formatTime(currentTime)}</strong>
-                          <small className={styles.remaining}> / залишилось {formatTime(Math.max(maxTime - currentTime, 0))}</small>
+                            <span>Час:</span><strong>{formatTime(currentTime)}</strong>
+                            <small className={styles.remaining}> / залишилось {formatTime(Math.max(maxTime - currentTime, 0))}</small>
                         </div>
                     </div>
 
