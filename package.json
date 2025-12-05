@@ -11,10 +11,12 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^3.0.0",
+    "@reduxjs/toolkit": "^2.11.0",
     "formik": "^2.4.9",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-hook-form": "^7.50.0",
+    "react-redux": "^9.2.0",
     "react-router-dom": "^7.9.6",
     "yup": "^1.7.1"
   },

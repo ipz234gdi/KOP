@@ -1,6 +1,4 @@
-import { useState } from 'react'
 import './App.css'
-// import './Minimal.css'
 import Header from './components/common/Header'
 import StartPage from './pages/StartPage'
 import GamePage from './pages/GamePage'
@@ -10,16 +8,14 @@ import { saveGameResult } from './utils/gameStorage'
 import { Routes, Route, useNavigate } from 'react-router-dom'
 import GameRouteGuard from "./routes/GameRouteGuard";
 import NotFoundPage from "./pages/NotFoundPage";
+import { useDispatch } from 'react-redux';
+import { addResult } from './store/slices/resultsSlice';
 
 export default function App() {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [lastStats, setLastStats] = useLocalStorage("lastStats", null);
-
-  const [settings, setSettings] = useLocalStorage('hanoiSettings', {
-    diskCount: 3,
-    difficulty: 1,
-  });
 
   function handleStart(values) {
     const { userId, difficulty, diskCount } = values;
@@ -27,12 +23,24 @@ export default function App() {
   }
 
   function handleFinish(stats, userId, difficulty, diskCount, lost = false) {
-    setLastStats(stats);
+    const now = Date.now();
 
+    dispatch(addResult({
+      id: now,
+      userId: userId,
+      moves: stats?.moves || 0,
+      time: stats?.time || 0,
+      lost: !!lost,
+      difficulty: difficulty,
+      diskCount: diskCount,
+      date: now
+    }));
+
+    setLastStats(stats);
     try {
       saveGameResult({ stats, userId, difficulty, diskCount, lost });
     } catch (err) {
-      console.error('Помилка збереження гри через saveGameResult:', err);
+      console.error('Save error:', err);
     }
 
     navigate(`/user/${encodeURIComponent(userId)}/results`);
@@ -50,11 +58,7 @@ export default function App() {
         <Route
           path="/"
           element={
-            <StartPage
-              onStart={handleStart}
-              settings={settings}
-              setSettings={setSettings}
-            />
+            <StartPage onStart={handleStart} />
           }
         />
 
@@ -74,7 +78,6 @@ export default function App() {
           path="/user/:userId/results"
           element={
             <ResultsPage
-              stats={lastStats}
               onRestart={handleRestart}
             />
           }

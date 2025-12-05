@@ -1,9 +1,11 @@
 import Button from '../components/common/Button'
-import { useEffect } from "react";
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as yup from 'yup';
 import { AutoSave } from "../utils/AutoSave";
 import styles from './StartPage.module.css';
+
+import { useDispatch, useSelector } from 'react-redux';
+import { updateSettings } from '../store/slices/settingsSlice';
 
 const settingsSchema = yup.object({
     userId: yup
@@ -22,10 +24,15 @@ const settingsSchema = yup.object({
         .oneOf([1, 2, 3], "Невірне значення складності"),
 });
 
-function StartPage({ onStart, settings, setSettings }) {
+function StartPage({ onStart }) {
+    const dispatch = useDispatch();
+    const settings = useSelector((state) => state.settings);
 
-    // комбінуємо початкові значення; якщо в settings немає userId — пустий рядок
-    const initialValues = { userId: settings.userId || '', ...settings };
+    const initialValues = { 
+        userId: settings.userId || '', 
+        diskCount: settings.diskCount || 3,
+        difficulty: settings.difficulty || 1 
+    };
 
     return (
         <main className={styles.page}>
@@ -35,15 +42,16 @@ function StartPage({ onStart, settings, setSettings }) {
                     enableReinitialize
                     validationSchema={settingsSchema}
                     onSubmit={(values) => {
-                        setSettings(values);
+                        dispatch(updateSettings(values));
                         onStart(values);
                     }}
                 >
                     <Form className={styles.form}>
                         <AutoSave
                             onChange={(values) => {
-                                localStorage.setItem("settings", JSON.stringify(values));
-                                setSettings(values);
+                                // Оновлюємо і localStorage, і Redux при кожній зміні
+                                localStorage.setItem("hanoiSettings", JSON.stringify(values)); // Виправлено ключ на hanoiSettings для узгодження зі слайсом
+                                dispatch(updateSettings(values));
                             }}
                         />
 

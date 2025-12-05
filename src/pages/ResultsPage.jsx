@@ -4,9 +4,16 @@ import { useParams } from "react-router-dom";
 import styles from './ResultsPage.module.css';
 import AllResults from '../components/common/AllResults';
 
+import { useSelector } from 'react-redux';
 
-function ResultsPage({ stats, onRestart }) {
+function ResultsPage({ onRestart }) {
   const { userId } = useParams();
+
+  const lastStats = useSelector(state => state.results.lastGameStats);
+
+  const history = useSelector(state => state.results.history);
+
+  const userHistory = history.filter(game => game.userId === userId);
 
   return (
     <main className={styles.page}>
@@ -17,11 +24,11 @@ function ResultsPage({ stats, onRestart }) {
         <div className={styles.resultsStats}>
           <div className={styles.resultsBlock}>
             <div className={styles.resultsLabel}>Ходи</div>
-            <div className={styles.resultsValue}>{stats?.moves ?? "--"}</div>
+            <div className={styles.resultsValue}>{lastStats?.moves ?? "--"}</div>
           </div>
           <div className={styles.resultsBlock}>
             <div className={styles.resultsLabel}>Час</div>
-            <div className={styles.resultsValue}>{formatTime(stats?.time)}</div>
+            <div className={styles.resultsValue}>{formatTime(lastStats?.time)}</div>
           </div>
         </div>
 
