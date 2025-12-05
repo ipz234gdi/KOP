@@ -49,8 +49,6 @@ function StartPage({ onStart }) {
                     <Form className={styles.form}>
                         <AutoSave
                             onChange={(values) => {
-                                // Оновлюємо і localStorage, і Redux при кожній зміні
-                                localStorage.setItem("hanoiSettings", JSON.stringify(values)); // Виправлено ключ на hanoiSettings для узгодження зі слайсом
                                 dispatch(updateSettings(values));
                             }}
                         />

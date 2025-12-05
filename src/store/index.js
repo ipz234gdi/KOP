@@ -8,3 +8,12 @@ export const store = configureStore({
     results: resultsReducer,
   },
 });
+
+store.subscribe(() => {
+  try {
+    const state = store.getState();
+    window.localStorage.setItem('hanoiSettings', JSON.stringify(state.settings));
+  } catch (err) {
+    console.error('Не вдалося зберегти налаштування в localStorage:', err);
+  }
+});

@@ -8,12 +8,12 @@ import { useSelector } from 'react-redux';
 
 function ResultsPage({ onRestart }) {
   const { userId } = useParams();
-
-  const lastStats = useSelector(state => state.results.lastGameStats);
+  const decodedUserId = userId ? decodeURIComponent(userId) : userId;
 
   const history = useSelector(state => state.results.history);
 
-  const userHistory = history.filter(game => game.userId === userId);
+  const userHistory = history.filter(game => game.userId === decodedUserId);
+  const lastUserStats = userHistory.length > 0 ? userHistory[0] : null;
 
   return (
     <main className={styles.page}>
@@ -24,11 +24,11 @@ function ResultsPage({ onRestart }) {
         <div className={styles.resultsStats}>
           <div className={styles.resultsBlock}>
             <div className={styles.resultsLabel}>Ходи</div>
-            <div className={styles.resultsValue}>{lastStats?.moves ?? "--"}</div>
+            <div className={styles.resultsValue}>{lastUserStats?.moves ?? "--"}</div>
           </div>
           <div className={styles.resultsBlock}>
             <div className={styles.resultsLabel}>Час</div>
-            <div className={styles.resultsValue}>{formatTime(lastStats?.time)}</div>
+            <div className={styles.resultsValue}>{formatTime(lastUserStats?.time)}</div>
           </div>
         </div>
 

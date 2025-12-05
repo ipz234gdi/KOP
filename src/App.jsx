@@ -23,11 +23,12 @@ export default function App() {
   }
 
   function handleFinish(stats, userId, difficulty, diskCount, lost = false) {
+    const decodedUserId = userId ? decodeURIComponent(userId) : userId;
     const now = Date.now();
 
     dispatch(addResult({
       id: now,
-      userId: userId,
+      userId: decodedUserId,
       moves: stats?.moves || 0,
       time: stats?.time || 0,
       lost: !!lost,
@@ -38,12 +39,12 @@ export default function App() {
 
     setLastStats(stats);
     try {
-      saveGameResult({ stats, userId, difficulty, diskCount, lost });
+      saveGameResult({ stats, userId: decodedUserId, difficulty, diskCount, lost });
     } catch (err) {
       console.error('Save error:', err);
     }
 
-    navigate(`/user/${encodeURIComponent(userId)}/results`);
+    navigate(`/user/${encodeURIComponent(decodedUserId)}/results`);
   }
 
   function handleRestart() {

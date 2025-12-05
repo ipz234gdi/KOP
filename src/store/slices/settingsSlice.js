@@ -17,8 +17,6 @@ const settingsSlice = createSlice({
       state.userId = action.payload.userId;
       state.diskCount = Number(action.payload.diskCount);
       state.difficulty = Number(action.payload.difficulty);
-      
-      localStorage.setItem('hanoiSettings', JSON.stringify(state));
     },
   },
 });
