@@ -5,10 +5,9 @@ import GameModal from '../components/common/GameModal'
 import { useHanoiGame } from '../hooks/useHanoiGame'
 import { useGameTimer } from '../hooks/useGameTimer';
 import { formatTime } from '../utils/formatTime';
+import { useGameStatus } from '../hooks/useGameStatus';
 
 export function GamePage({ onFinish, onAbort, settings }) {
-    const [showFinishModal, setShowFinishModal] = useState(false);
-    const [finalStats, setFinalStats] = useState(null);
 
     const {
         rods,
@@ -22,34 +21,23 @@ export function GamePage({ onFinish, onAbort, settings }) {
 
     const maxTime = Math.round((2 ** settings.diskCount) * (4 - settings.difficulty) * 2);
 
-    const { currentTime, timeExpired, resetTimer } = useGameTimer(getElapsedTime, maxTime, showFinishModal);
+    const { currentTime, timeExpired, resetTimer } = useGameTimer(getElapsedTime, maxTime);
 
-    useEffect(() => {
-        if (isFinished() && !showFinishModal) {
-
-            const finalTime = getElapsedTime();
-            setFinalStats({ moves, time: finalTime });
-            setShowFinishModal(true);
-        }
-    }, [rods, isFinished, moves, getElapsedTime, showFinishModal]);
-
-    useEffect(() => {
-        if (timeExpired && !showFinishModal) {
-            setFinalStats({ moves, time: currentTime });
-            setShowFinishModal(true);
-        }
-    }, [timeExpired, showFinishModal, currentTime, moves]);
-
-    const handleRestartLevel = () => {
-        resetGame();
-        resetTimer();
-        setShowFinishModal(false);
-        setFinalStats(null);
-    };
-
-    const handleGoToResults = () => {
-        onFinish(finalStats);
-    };
+    const {
+        showFinishModal,
+        finalStats,
+        handleRestartLevel,
+        handleGoToResults,
+    } = useGameStatus({
+        isFinished,
+        getElapsedTime,
+        moves,
+        currentTime,
+        timeExpired,
+        resetGame,
+        resetTimer,
+        onFinish
+    })
 
     return (
         <main>
