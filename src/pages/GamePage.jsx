@@ -5,6 +5,7 @@ import GameModal from '../components/common/GameModal'
 import { useHanoiGame } from '../hooks/useHanoiGame'
 import { useGameTimer } from '../hooks/useGameTimer';
 import { formatTime } from '../utils/formatTime';
+import { useGameStatus } from '../hooks/useGameStatus'
 import { useParams } from "react-router-dom";
 import styles from './GamePage.module.css';
 
@@ -14,9 +15,6 @@ export function GamePage({ onFinish, onAbort }) {
     const diskCountNum = Number(diskCount);
     const difficultyNum = Number(difficulty);
 
-    const [showFinishModal, setShowFinishModal] = useState(false);
-    const [finalStats, setFinalStats] = useState(null);
-
     const {
         rods,
         selectedRod,
@@ -25,38 +23,31 @@ export function GamePage({ onFinish, onAbort }) {
         isFinished,
         getElapsedTime,
         resetGame,
-    } = useHanoiGame(diskCountNum);
+    } = useHanoiGame(diskCountNum)
 
-    const maxTime = Math.round((2 ** diskCountNum) * (4 - difficultyNum) * 2);
+    const maxTime = Math.round((2 ** diskCountNum) * (4 - difficultyNum) * 2)
 
-    const { currentTime, timeExpired, resetTimer } = useGameTimer(getElapsedTime, maxTime, showFinishModal);
+    const { currentTime, timeExpired, resetTimer } =
+        useGameTimer(getElapsedTime, maxTime)
 
-    useEffect(() => {
-        if (isFinished() && !showFinishModal) {
-
-            const finalTime = getElapsedTime();
-            setFinalStats({ moves, time: finalTime });
-            setShowFinishModal(true);
-        }
-    }, [rods, isFinished, moves, getElapsedTime, showFinishModal]);
-
-    useEffect(() => {
-        if (timeExpired && !showFinishModal) {
-            setFinalStats({ moves, time: currentTime });
-            setShowFinishModal(true);
-        }
-    }, [timeExpired, showFinishModal, currentTime, moves]);
-
-    const handleRestartLevel = () => {
-        resetGame();
-        resetTimer();
-        setShowFinishModal(false);
-        setFinalStats(null);
-    };
-
-    const handleGoToResults = () => {
-        onFinish(finalStats, userId, difficultyNum, diskCountNum, !!timeExpired);
-    };
+    const {
+        showFinishModal,
+        finalStats,
+        handleRestartLevel,
+        handleGoToResults
+    } = useGameStatus({
+        isFinished,
+        moves,
+        getElapsedTime,
+        currentTime,
+        timeExpired,
+        resetGame,
+        resetTimer,
+        onFinish,
+        userId,
+        difficultyNum,
+        diskCountNum
+    })
 
     return (
         <main className={styles.page}>
