@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: components/game/Disk.jsx</title>
+    <title>JSDoc: Source: components/common/Button.stories.jsx</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: components/game/Disk.jsx</h1>
+    <h1 class="page-title">Source: components/common/Button.stories.jsx</h1>
 
     
 
@@ -26,59 +26,71 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/**
- * @module Disk
- * @description Visual representation of a disk in the Tower of Hanoi game.
- * Each disk has a unique size and color.
- */
-import styles from './Disk.module.css';
+            <pre class="prettyprint source linenums"><code>import Button from './Button';
 
 /**
- * Color palette for disks (cycled by size).
- * @constant {string[]}
+ * Button — базовий компонент кнопки.
+ * Використовується по всьому додатку для дій користувача.
  */
-const colors = [
-    "#FFB347",
-    "#87CEEB",
-    "#90EE90",
-    "#FF6961",
-    "#C299FF",
-    "#FFD700",
-    "#FFB6C1",
-    "#A0CED9",
-];
+export default {
+    title: 'Common/Button',
+    component: Button,
+    tags: ['autodocs'],
+    argTypes: {
+        children: {
+            control: 'text',
+            description: 'Текст кнопки',
+        },
+        type: {
+            control: { type: 'select' },
+            options: ['button', 'submit', 'reset'],
+            description: 'HTML тип кнопки',
+        },
+        disabled: {
+            control: 'boolean',
+            description: 'Чи вимкнена кнопка',
+        },
+        className: {
+            control: 'text',
+            description: 'Додатковий CSS клас',
+        },
+        onClick: { action: 'clicked' },
+    },
+};
 
 /**
- * Disk component representing a single game disk.
- * Width and color are calculated based on the disk size.
- * @function Disk
- * @param {Object} props - Component props.
- * @param {number} props.size - Disk size (1 = smallest, 8 = largest).
- * @param {number} props.index - Position index on the rod.
- * @returns {JSX.Element} A styled disk element.
+ * Кнопка за замовчуванням
  */
-function Disk({ size, index }) {
-    const maxSize = 8;
-    const minWidth = 40;
-    const maxWidth = 160;
+export const Default = {
+    args: {
+        children: 'Натисни мене',
+        type: 'button',
+        disabled: false,
+    },
+};
 
-    const width = minWidth + ((maxWidth - minWidth) * (size - 1)) / (maxSize - 1);
+/**
+ * Кнопка з довгим текстом
+ */
+export const WithLongText = {
+    args: {
+        children: 'Дуже довгий текст кнопки для перевірки відображення',
+        type: 'button',
+        disabled: false,
+    },
+};
 
-    const color = colors[(size - 1) % colors.length];
-
-    return (
-        &lt;div
-            className={`${styles.disk} ${styles.diskAnim}`}
-            style={{
-                width: `${width}px`,
-                background: color,
-            }}
-        >
-            D{size}
-        &lt;/div>
-    );
-}
-export default Disk;</code></pre>
+/**
+ * Вимкнена кнопка
+ */
+export const Disabled = {
+    args: {
+        children: 'Вимкнена',
+        type: 'button',
+        disabled: true,
+    },
+};
+</code></pre>
         </article>
     </section>
 
