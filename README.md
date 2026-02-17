@@ -1,16 +1,78 @@
-# React + Vite
+# Ханойські башти (Tower of Hanoi)
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Інтерактивна веб-гра «Ханойські башти», побудована на React + Vite.
+Гравець обирає складність, кількість дисків і переміщує їх між стержнями, дотримуючись класичних правил головоломки.
 
-Currently, two official plugins are available:
+## Технології
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React 19** — UI-бібліотека
+- **Vite 7** — збірник та dev-сервер
+- **Redux Toolkit** — управління станом
+- **React Router 7** — маршрутизація
+- **React Hook Form + Yup** — валідація форм
+- **Storybook** — ізольована розробка компонентів
+- **JSDoc** — генерація документації
 
-## React Compiler
+## Вимоги
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- Node.js >= 18
+- npm >= 9
 
-## Expanding the ESLint configuration
+## Встановлення та запуск
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+```bash
+# Клонувати репозиторій
+git clone <url-репозиторію>
+cd hanoi-game
+
+# Встановити залежності
+npm install
+
+# Запустити dev-сервер
+npm run dev
+
+# Зібрати продакшн-збірку
+npm run build
+
+# Попередній перегляд збірки
+npm run preview
+
+# Лінтинг
+npm run lint
+```
+
+## Документація
+
+```bash
+# Згенерувати JSDoc-документацію
+npm run docs
+```
+
+Згенерована документація буде доступна в папці `docs/`. Відкрийте `docs/index.html` у браузері.
+
+## Storybook
+
+```bash
+# Запустити Storybook
+npm run storybook
+```
+
+Storybook містить інтерактивні сторі для компонентів `Button` та `GameModal`.
+
+## Ліцензія
+
+Цей проєкт ліцензовано за ліцензією MIT — див. файл [LICENSE](./LICENSE).
+
+Звіт про ліцензії залежностей: [license-report.md](./license-report.md).
+
+## Конфіденційність
+
+Проєкт відповідає вимогам GDPR. Детальніше: [PRIVACY_POLICY.md](./PRIVACY_POLICY.md).
+
+При першому відвідуванні користувач бачить cookie-банер для надання згоди.
+
+## Автор
+
+**Грушевицький Д.І.** — студент групи ІПЗ-23-4
+
+Предмет: КОП (Командна Організація Програмних проєктів), 2025
