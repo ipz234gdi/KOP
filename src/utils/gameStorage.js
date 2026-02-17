@@ -1,4 +1,19 @@
-﻿export function saveGameResult({ stats, userId, difficulty, diskCount, lost = false }) {
+﻿/**
+ * @module gameStorage
+ * @description Utility for saving game results and configurations to localStorage.
+ */
+
+/**
+ * Saves a game result and configuration to localStorage.
+ * @function saveGameResult
+ * @param {Object} params - Game result parameters.
+ * @param {Object} params.stats - Game statistics (moves, time).
+ * @param {string} params.userId - Player identifier.
+ * @param {number} params.difficulty - Difficulty level.
+ * @param {number} params.diskCount - Number of disks used.
+ * @param {boolean} [params.lost=false] - Whether the player lost.
+ */
+export function saveGameResult({ stats, userId, difficulty, diskCount, lost = false }) {
   const timestamp = Date.now();
 
   try {

@@ -1,5 +1,16 @@
+/**
+ * @module useHanoiGame
+ * @description Core game logic hook for the Tower of Hanoi.
+ * Manages rod state, disk movement, and win detection.
+ */
 import { useState, useRef, useCallback, useEffect } from 'react';
 
+/**
+ * Creates the initial rod configuration with all disks on the first rod.
+ * @function createInitialRods
+ * @param {number} diskCount - Number of disks.
+ * @returns {Array<number[]>} Array of 3 rods.
+ */
 function createInitialRods(diskCount) {
   return [
     Array.from({ length: diskCount }, (_, i) => diskCount - i),
@@ -8,12 +19,25 @@ function createInitialRods(diskCount) {
   ];
 }
 
+/**
+ * Checks whether a disk can be moved from one rod to another.
+ * @function canMoveDisk
+ * @param {number[]} fromRod - Source rod array.
+ * @param {number[]} toRod - Destination rod array.
+ * @returns {boolean} True if the move is valid.
+ */
 function canMoveDisk(fromRod, toRod) {
   if (fromRod.length === 0) return false;
   if (toRod.length === 0) return true;
   return fromRod[fromRod.length - 1] < toRod[toRod.length - 1];
 }
 
+/**
+ * Custom hook for the Tower of Hanoi game logic.
+ * @function useHanoiGame
+ * @param {number} diskCount - Number of disks in the game.
+ * @returns {Object} Game state and actions (rods, selectedRod, moves, handleRodClick, isFinished, getElapsedTime, resetGame).
+ */
 export function useHanoiGame(diskCount) {
   const [rods, setRods] = useState(() => createInitialRods(diskCount));
   const [selectedRod, setSelectedRod] = useState(null);

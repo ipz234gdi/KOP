@@ -1,3 +1,16 @@
+/**
+ * @module Header
+ * @description Application header component with title and subtitle.
+ */
+
+/**
+ * Header component displaying the app title and optional subtitle.
+ * @function Header
+ * @param {Object} props - Component props.
+ * @param {string} props.title - Main header title text.
+ * @param {string} [props.subtitle] - Optional subtitle text.
+ * @returns {JSX.Element} A styled header element.
+ */
 function Header({ title, subtitle }) {
   return (
     <header className="w-full py-4 px-6 bg-gradient-to-r from-violet-600 to-indigo-600 text-white shadow-md">

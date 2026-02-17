@@ -1,4 +1,15 @@
-﻿export function formatTime(sec) {
+﻿/**
+ * @module formatTime
+ * @description Utility for formatting elapsed time in seconds into a human-readable Ukrainian string.
+ */
+
+/**
+ * Formats a time value in seconds into a human-readable string (e.g., "1 хв 30 с").
+ * @function formatTime
+ * @param {number} sec - Time in seconds.
+ * @returns {string} Formatted time string in Ukrainian.
+ */
+export function formatTime(sec) {
   if (typeof sec !== "number" || isNaN(sec)) return "--";
 
   const days = Math.floor(sec / 86400);
@@ -10,7 +21,7 @@
   if (days) parts.push(`${days} д`);
   if (hours) parts.push(`${hours} г`);
   if (minutes) parts.push(`${minutes} хв`);
-  
+
   if (days || hours || minutes) {
     parts.push(`${seconds < 10 ? '0' : ''}${seconds} с`);
   } else {

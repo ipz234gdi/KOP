@@ -1,7 +1,24 @@
-﻿import Button from './Button';
+﻿/**
+ * @module GameModal
+ * @description Modal dialog shown when a game level is completed or time expires.
+ * Displays stats (moves, time) for wins or a message for losses.
+ */
+import Button from './Button';
 import { formatTime } from '../../utils/formatTime';
 import Modal from './Modal';
 
+/**
+ * Game completion modal component.
+ * @function GameModal
+ * @param {Object} props - Component props.
+ * @param {boolean} props.timeExpired - Whether the game ended due to time expiration.
+ * @param {Object} [props.finalStats] - Final game statistics.
+ * @param {number} [props.finalStats.moves] - Number of moves made.
+ * @param {number} [props.finalStats.time] - Time elapsed in seconds.
+ * @param {Function} props.onRestart - Callback to restart the game.
+ * @param {Function} props.onFinish - Callback to finish and view results.
+ * @returns {JSX.Element} A modal with game results and action buttons.
+ */
 export default function GameModal({ timeExpired, finalStats, onRestart, onFinish }) {
   return (
     <Modal>

@@ -1,5 +1,14 @@
+/**
+ * @module Disk
+ * @description Visual representation of a disk in the Tower of Hanoi game.
+ * Each disk has a unique size and color.
+ */
 import styles from './Disk.module.css';
 
+/**
+ * Color palette for disks (cycled by size).
+ * @constant {string[]}
+ */
 const colors = [
     "#FFB347",
     "#87CEEB",
@@ -11,6 +20,15 @@ const colors = [
     "#A0CED9",
 ];
 
+/**
+ * Disk component representing a single game disk.
+ * Width and color are calculated based on the disk size.
+ * @function Disk
+ * @param {Object} props - Component props.
+ * @param {number} props.size - Disk size (1 = smallest, 8 = largest).
+ * @param {number} props.index - Position index on the rod.
+ * @returns {JSX.Element} A styled disk element.
+ */
 function Disk({ size, index }) {
     const maxSize = 8;
     const minWidth = 40;
