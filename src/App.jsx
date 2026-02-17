@@ -1,5 +1,11 @@
+/**
+ * @module App
+ * @description Root application component. Manages routing, game state transitions,
+ * and renders the main layout with Header, page routes, footer, and cookie consent.
+ */
 import './App.css'
 import Header from './components/common/Header'
+import CookieConsent from './components/common/CookieConsent'
 import StartPage from './pages/StartPage'
 import GamePage from './pages/GamePage'
 import ResultsPage from './pages/ResultsPage'
@@ -10,6 +16,13 @@ import GameRouteGuard from "./routes/GameRouteGuard";
 import NotFoundPage from "./pages/NotFoundPage";
 import { useDispatch } from 'react-redux';
 import { addResult } from './store/slices/resultsSlice';
+
+/**
+ * Root application component.
+ * Handles game start, finish, and restart navigation.
+ * @function App
+ * @returns {JSX.Element} The application shell with routes and layout.
+ */
 
 export default function App() {
   const navigate = useNavigate();
@@ -91,6 +104,8 @@ export default function App() {
       <footer>
         Розроблено студентом Грушевицьким Д.І. ІПЗ-23-4, 2025
       </footer>
+
+      <CookieConsent />
     </div>
   );
 }

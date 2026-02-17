@@ -1,0 +1,92 @@
+.banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(20, 20, 30, 0.95);
+  backdrop-filter: blur(10px);
+  padding: 20px 24px;
+  z-index: 9999;
+  box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.4s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.content {
+  max-width: 960px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.text {
+  color: #e0e0e0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+  flex: 1;
+  min-width: 250px;
+}
+
+.link {
+  color: #7eb8ff;
+  text-decoration: underline;
+}
+
+.link:hover {
+  color: #a8d4ff;
+}
+
+.buttons {
+  display: flex;
+  gap: 12px;
+  flex-shrink: 0;
+}
+
+.acceptBtn {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.acceptBtn:hover {
+  background: #43a047;
+  transform: scale(1.03);
+}
+
+.declineBtn {
+  background: transparent;
+  color: #bbb;
+  border: 1px solid #555;
+  padding: 10px 24px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s, border-color 0.2s;
+}
+
+.declineBtn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #fff;
+  border-color: #888;
+}
