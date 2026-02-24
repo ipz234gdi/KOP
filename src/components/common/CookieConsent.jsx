@@ -43,7 +43,7 @@ export default function CookieConsent() {
                     Ніякі дані не передаються третім особам.
                     Детальніше — у нашій{' '}
                     <a
-                        href="https://github.com/ipz234gdi/KOP/blob/main/PRIVACY_POLICY.md"
+                        href="https://github.com/ipz234gdi/KOP/blob/lab_1_docs/PRIVACY_POLICY.md"
                         target="_blank"
                         rel="noopener noreferrer"
                         className={styles.link}
